@@ -6,15 +6,18 @@
     <body style="margin : 0px; overflow: hidden;">
         <a-scene embedded arjs>
         <a-marker type="pattern" url="https://raw.githubusercontent.com/slammmin3/my-project-2/main/pattern-shape-f.patt">
-            <a-asset-item id="cube" src="colorful_cube.glb"></a-asset-item>
+            <a-asset-item id="bird" src="phoenix_bird.glb"></a-asset-item>
             <a-entity
-            gltf-model="#cube"
-            position="0 0 0"
-            scale="0.5 0.5 0.5"
-            animation-mixer="clip: CubeAction;loop: repeat"
-            ></a-entity>
-        </a-marker>
-        <a-entity camera></a-entity>
-        </a-scene>
+                gltf-model="#bird"
+                position="0 0 0"
+                rotation="0 -135 0"
+                scale="0.03 0.03 0.03"
+                animation-mixer="timeScale: 0.3">
+            </a-entity>
+        <a-entity camera look-controls position="0 1.6 0"></a-entity>
+        <!-- <a-camera position="1 4 19"></a-camera> -->
+        <a-light type="ambient" color="white"></a-light>
+      </a-scene>
+    </a-scene>
     </body>
 </html>
