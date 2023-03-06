@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <body style="margin : 0px; overflow: hidden;">
+        <a-scene embedded arjs>
+        <a-marker type="pattern" url="pattern-shape-f.patt">
+            <a-asset-item id="cube" src="colorful_cube.glb"></a-asset-item>
+            <a-entity
+            gltf-model="#cube"
+            position="0 0 0"
+            scale="0.5 0.5 0.5"
+            animation-mixer="clip: CubeAction;loop: repeat"
+            ></a-entity>
+        </a-marker>
+        <a-entity camera></a-entity>
+        </a-scene>
+    </body>
+</html>
