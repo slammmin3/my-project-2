@@ -5,18 +5,19 @@
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     <body style="margin : 0px; overflow: hidden;">
         <a-scene embedded arjs>
+        <a-box position='0 0.5 0' material='opacity: 0.5; color: black'></a-box>
         <a-marker type="pattern" url="https://raw.githubusercontent.com/slammmin3/my-project-2/main/pattern-shape-f.patt">
-            <a-asset-item id="bird" src="phoenix_bird.glb"></a-asset-item>
+<!--             <a-asset-item id="bird" src="phoenix_bird.glb"></a-asset-item>
             <a-entity
                 gltf-model="#bird"
                 position="0 0 0"
                 rotation="0 0 0"
                 scale="0.03 0.03 0.03"
                 animation-mixer="timeScale: 0.3">
-            </a-entity>
+            </a-entity> -->
 <!--         <a-entity camera look-controls position="0 1.6 0"></a-entity> -->
         <a-camera position=" 0 0 0"></a-camera>
-        <a-light type="ambient" color="white"></a-light>
+<!--         <a-light type="ambient" color="white"></a-light> -->
       </a-scene>
     </a-scene>
     </body>
