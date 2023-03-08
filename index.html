@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     <script src="https://unpkg.com/aframe-fps-counter-component/dist/aframe-fps-counter-component.min.js"></script>
-    <body style="margin : 0px; overflow: hidden;">
+    <body style="margin : 0px; overflow: hidden">
         <a-scene
+          embedded arjs
           device-orientation-permission-ui="enabled: false"
-          vr-mode-ui="enabled: false"
-          embedded arjs>
+          vr-mode-ui="enabled: false">
           <a-entity hand-controls>
             <a-entity fps-counter></a-entity>
           </a-entity>
             <a-marker preset="hiro">
               <a-asset-item id="cube" src="roadmap.glb"></a-asset-item>
             <a-entity 
-            animation-mixer
+            animation-mixer="timeScale: 2"
             rotation="0 90 -90"
             scale="0.1 0.1 0.1"
             position="0 0.5 0"
@@ -35,7 +35,7 @@
                 animation-mixer="clip: Action; timeScale: 5">
               </a-entity>
           <!-- <a-entity geometry="primitive: sphere; radius: 0.3" material='opacity: 0.9; color: white'></a-entity> -->
-        </a-marker> -->
+<!--         </a-marker> --> -->
             <!-- <a-asset-item id="cube" src="phoenix_bird.glb"></a-asset-item>
             <a-entity
             gltf-model="#cube"
