@@ -1,50 +1,94 @@
 <!DOCTYPE html>
-<html>
-    <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-    <script src="https://unpkg.com/aframe-fps-counter-component/dist/aframe-fps-counter-component.min.js"></script>
-    <body style="margin : 0px; overflow: hidden">
-        <a-entity camera>
-        <a-scene 
-                 embedded
-                 vr-mode-ui="enabled: false"
-                 device-orientation-permission-ui="enabled: false">
-          <a-entity hand-controls>
-            <a-entity fps-counter></a-entity>
-          </a-entity>
-            <a-marker preset="hiro">
-              <a-asset-item id="cube" src="orange_cube.glb"></a-asset-item>
-            <a-entity 
-            animation-mixer="timeScale: 2"
-            rotation="0 0 0"
-            scale="1 1 1"
-            position="0 0.5 0"
-            gltf-model="#cube">
-          </a-entity>
-          </a-marker>
-<!--         <a-marker preset="hiro">
-          <a-box position='0 0.5 0' material='opacity: 0.3; color: pink'>
-          <a-entity geometry="primitive: box;width: 0.8; height: 0.8; depth: 0.8" material="opacity: 0.5; color: orange"></a-entity>
-          </a-box>
-            <a-asset-item id="cube" src="colorful_cube.glb"></a-asset-item>
-              <a-entity 
-                gltf-model="#cube"
-                scale="0.22 0.22 0.22"
-                position="0 0 0"
-                meterial="opacity: 0"
-                animation-mixer="clip: Action; timeScale: 5">
-              </a-entity> -->
-          <!-- <a-entity geometry="primitive: sphere; radius: 0.3" material='opacity: 0.9; color: white'></a-entity>
-        </a-marker>
-            <!-- <a-asset-item id="cube" src="phoenix_bird.glb"></a-asset-item>
-            <a-entity
-            gltf-model="#cube"
-            position="0 0 0"
-            scale="0.005 0.005 0.005"
-            animation-mixer="clip: Take 001;loop: repeat"
-            ></a-entity> -->
-       </a-entity>
-        </a-scene>
-    </body>
+<html lang="en">
+  <head>
+    <title>Hello!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+    <!-- AR.js by @jerome_etienne - github: https://github.com/jeromeetienne/ar.js - info: https://medium.com/arjs/augmented-reality-in-10-lines-of-html-4e193ea9fdbf -->
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js"></script>
+
+<script>
+AFRAME.registerComponent("lerpsmooth", {
+  init: function() {
+    this.target = document.querySelector('#smoothed-box');
+    this.prevPosition = null;
+    this.prevRotation = null;
+  },
+  tick: function() {
+    // if marker is visible
+    if (this.el.object3D.visible) {
+      // also make the object-to-smooth visible
+      this.target.setAttribute('visible', 'true')
+      // if we know about the previous position
+      if(this.prevPosition) {
+        // smooth position
+        this.target.object3D.position.lerp(this.prevPosition, 0.1)
+
+        // smooth rotation
+        let rot = this.target.object3D.rotation.toVector3().lerp(this.prevRotation, 0.1)
+        this.target.object3D.rotation.setFromVector3(rot)
+      } 
+      // we don't know about the previous position
+      else { 
+        // initial values to start with
+        var initialPosition = this.el.getAttribute('position')
+        var initialRotation = this.el.getAttribute('rotation')
+        // TODO This does not take into account the initial position and rotation values of the target, so everything starts at the marker with 0 0 0
+        this.target.setAttribute('position', initialPosition)
+        this.target.setAttribute('rotation', initialRotation)
+      }
+      // cache position for next tick
+      this.prevPosition = this.el.object3D.position
+      this.prevRotation = this.el.object3D.rotation
+    } 
+    // marker is not visible
+    else { 
+      // also make the object-to-smooth invisible
+      this.target.setAttribute('visible', 'false')
+      // reset the cache position
+      this.prevPosition = null;
+      this.prevRotation = null;
+    }
+  }
+})
+</script>
+       
+  </head>  
+  <body>
+    <h1>Hi there!</h1>
+    <a-scene embedded arjs='sourceType: webcam;'>
+      
+      <a-marker lerpsmooth id="marker" preset="hiro">
+        
+        <a-plane width="3" height="3" opacity="0.5" color="green" rotation="-90 0 0"></a-plane>
+        
+        <a-box id="second-box-as-comparison" position="0 0 0" material="opacity: 0.2;">
+        </a-box>
+        
+        <a-box id="third-box-as-external-comparison" position="1.3 0 0" color="blue" material="opacity: 0.2;">
+          <a-text value="top" align="center" position="0 0.5 0" rotation="-90 0 0" side="double"></a-text>
+          <a-text value="front" align="center" position="0 0 0.5" rotation="0 0 0" side="double"></a-text>
+        </a-box>
+        
+      </a-marker>
+
+      <a-box id="smoothed-box" color="red" position="0 0 0" material="oopacity: 0.5;">
+        <a-text value="top" align="center" position="0 0.5 0" rotation="-90 0 0" side="double"></a-text>
+        <a-text value="front" align="center" position="0 0 0.5" rotation="0 0 0" side="double"></a-text>
+      </a-box>
+
+      <a-camera-static/>
+    </a-scene>
+    
+    <!-- include the Glitch button to show what the webpage is about and
+          to make it easier for folks to view source and remix -->
+    <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
+    <script src="https://button.glitch.me/button.js"></script>
+  </body>
 </html>
+
