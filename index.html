@@ -6,7 +6,10 @@
     <script src="https://unpkg.com/aframe-fps-counter-component/dist/aframe-fps-counter-component.min.js"></script>
     <body style="margin : 0px; overflow: hidden">
         <a-entity camera>
-        <a-scene>
+        <a-scene 
+                 embedded
+                 vr-mode-ui="enabled: false"
+                 device-orientation-permission-ui="enabled: false">
           <a-entity hand-controls>
             <a-entity fps-counter></a-entity>
           </a-entity>
